@@ -14,6 +14,12 @@ Dim iResponse As Integer
 Dim bFilesFound As Boolean
 
 Sub Main()
+'******
+' Rob Ellingson
+' 2021-10-06
+' user requests created chart loads in maximized window
+' cancel immeditally on inputbox Cancel button
+'******
     
     frmSplash.lblStatus.Visible = False
     frmSplash.lblStatus2.Visible = False
@@ -28,12 +34,20 @@ Sub Main()
         sMessage = "Enter Two Digit Year in YY format"
         sYear = Format(Date, "yy")
         sYear = InputBox(sMessage, sTitle, sYear)
+        If StrPtr(sYear) = 0 Then
+            ' User entered cancel
+            Exit Do
+        End If
         sYear4 = Format(Date, "yyyy")
         
         sTitle = "Enter Date To Run Daily Oven Chart"
         sMessage = "Enter Two Digit Month in MM format"
         sMonth = Format(Date, "mm")
         sMonth = InputBox(sMessage, sTitle, sMonth)
+        If StrPtr(sMonth) = 0 Then
+            ' User entered cancel
+            Exit Do
+        End If
         If Len(sMonth) <> 2 Then
           sMonth = "0" & sMonth
         End If
@@ -42,6 +56,10 @@ Sub Main()
         sMessage = "Enter Two Digit Day in DD format"
         sDay = Format(Date, "dd")
         sDay = InputBox(sMessage, sTitle, sDay)
+        If StrPtr(sDay) = 0 Then
+            ' User entered cancel
+            Exit Do
+        End If
         If Len(sDay) <> 2 Then
           sDay = "0" & sDay
         End If
@@ -199,6 +217,7 @@ Sub Ovens()
         ConflictResolution:=Excel.XlSaveConflictResolution.xlLocalSessionChanges
     ActiveWorkbook.Close True
     
+    Application.WindowState = xlMaximized
     Set WB = Workbooks.Open("X:\Reports\" & sYear4 & "-" & sMonth & "-" & sDay & ".xlsx")
     Application.Visible = True
     Application.ScreenUpdating = True
