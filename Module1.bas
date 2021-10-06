@@ -53,7 +53,6 @@ Sub Main()
         End If
     
         If iResponse = vbRetry Then
-            ' stay in look
         End If
     Loop While Not IsDate(sOvenFileName) And Not iResponse = vbCancel
             
@@ -119,9 +118,7 @@ End Sub
 
 Sub Ovens()
 '
-' Ovens Macro
-'
-' Keyboard Shortcut: Ctrl+Shift+O
+' Format Oven Data, Create Oven Chart
 '
     
     frmSplash.lblStatus.Caption = "Formatting Data"
